@@ -6,8 +6,8 @@ CREATE DATABASE auxiliar
   WITH OWNER = postgres
        ENCODING = 'UTF8'
        TABLESPACE = pg_default
-       LC_COLLATE = 'Spanish_Uruguay.1252'
-       LC_CTYPE = 'Spanish_Uruguay.1252'
+       LC_COLLATE = 'es_UY.UTF-8'
+       LC_CTYPE = 'es_UY.UTF-8'
        CONNECTION LIMIT = -1;
 
 	   -- Extension: postgis
@@ -15,8 +15,7 @@ CREATE DATABASE auxiliar
 -- DROP EXTENSION postgis;
 
  CREATE EXTENSION postgis
-  SCHEMA public
-  VERSION "2.3.2";
+  SCHEMA public;
 
   
 -- Table: public.barrios

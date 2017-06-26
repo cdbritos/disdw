@@ -1,42 +1,22 @@
---base dwh 
+﻿
+-- Database: dwh
 
+-- DROP DATABASE dwh;
 
 CREATE DATABASE dwh
   WITH OWNER = postgres
        ENCODING = 'UTF8'
        TABLESPACE = pg_default
-       LC_COLLATE = 'Spanish_Uruguay.1252'
-       LC_CTYPE = 'Spanish_Uruguay.1252'
+       LC_COLLATE = 'es_UY.UTF-8'
+       LC_CTYPE = 'es_UY.UTF-8'
        CONNECTION LIMIT = -1;
 
 COMMENT ON DATABASE dwh
   IS 'Base de datos del grupo 5';
 
-
 --para borrar
 truncate table ccz cascade;
 truncate table ubicaciongeog_1 cascade;
-
-
-CREATE TABLE public.bridge_ccubicacion
-(
-  idestacion character varying(23) NOT NULL,
-  idccz smallint NOT NULL,
-  CONSTRAINT pk_bridgecczubicacion PRIMARY KEY (idestacion, idccz),
-  CONSTRAINT fk_ccz FOREIGN KEY (idccz)
-      REFERENCES public.ccz (idccz) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_ubicacion FOREIGN KEY (idestacion)
-      REFERENCES public.ubicaciongeog_1 (idestacion) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE public.bridge_ccubicacion
-  OWNER TO postgres;
-
-  
   
   
 CREATE TABLE public.ccz
@@ -64,8 +44,9 @@ CREATE TABLE public.contaminantes
 )
 WITH (
   OIDS=FALSE
-)
-TABLESPACE tbs_dwh;
+);
+
+
 ALTER TABLE public.contaminantes
   OWNER TO postgres;
 
@@ -89,12 +70,13 @@ ALTER TABLE public.lineas
   idmetodo integer NOT NULL,
   nommetodo character varying(15),
   CONSTRAINT "pkeyMetodos" PRIMARY KEY (idmetodo)
-  USING INDEX TABLESPACE tbs_dwh
 )
 WITH (
   OIDS=FALSE
-)
-TABLESPACE tbs_dwh;
+);
+
+
+
 ALTER TABLE public.metodos
   OWNER TO postgres;
 
@@ -112,7 +94,24 @@ WITH (
 ALTER TABLE public.ubicaciongeog_1
   OWNER TO postgres;
 
-  
+CREATE TABLE public.bridge_ccubicacion
+(
+  idestacion character varying(23) NOT NULL,
+  idccz smallint NOT NULL,
+  CONSTRAINT pk_bridgecczubicacion PRIMARY KEY (idestacion, idccz),
+  CONSTRAINT fk_ccz FOREIGN KEY (idccz)
+      REFERENCES public.ccz (idccz) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_ubicacion FOREIGN KEY (idestacion)
+      REFERENCES public.ubicaciongeog_1 (idestacion) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.bridge_ccubicacion
+  OWNER TO postgres;
+
  
 CREATE TABLE public.mediciones
 (
