@@ -1,0 +1,52 @@
+<Schema name="dwh">
+  <Cube name="mediciones" visible="true" cache="true" enabled="true">
+    <Table name="mediciones" schema="public">
+    </Table>
+    <Dimension type="StandardDimension" visible="true" foreignKey="idmetodo" name="metodos">
+      <Hierarchy name="metodos de monitoreo" visible="true" hasAll="true" primaryKey="idmetodo">
+        <Table name="metodos" schema="public" alias="">
+        </Table>
+        <Level name="idMetodo" visible="true" table="metodos" column="idmetodo" nameColumn="idmetodo" type="String" uniqueMembers="false" captionColumn="nommetodo">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="idcontaminante" name="contaminantes">
+      <Hierarchy name="contaminantes" visible="true" hasAll="true">
+        <Table name="contaminantes" schema="public" alias="">
+        </Table>
+        <Level name="tipo" visible="true" table="contaminantes" column="idtipo" uniqueMembers="false" captionColumn="nomtipo">
+        </Level>
+        <Level name="subtipo" visible="true" table="contaminantes" column="idsubtipo" uniqueMembers="false" captionColumn="nomsubtipo">
+        </Level>
+        <Level name="contaminantes" visible="true" table="contaminantes" column="idcontaminante" uniqueMembers="false" captionColumn="nomcontaminante">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="idestacion" name="ubicacionGeografica">
+      <Hierarchy name="ubicGeografica" visible="true" hasAll="true">
+        <Table name="ubicaciongeog_1" schema="public" alias="">
+        </Table>
+        <Level name="barrio" visible="true" table="ubicaciongeog_1" column="idbarrio" uniqueMembers="false" captionColumn="nombarrio">
+        </Level>
+        <Level name="estacion" visible="true" table="ubicaciongeog_1" column="idestacion" uniqueMembers="false" captionColumn="nomestacion">
+        </Level>
+      </Hierarchy>
+      <Hierarchy name="centroComunal" visible="true" hasAll="true">
+        <Table name="ccz" schema="public" alias="">
+        </Table>
+        <Level name="centroComunal" visible="true" table="ccz" column="idccz" uniqueMembers="false" captionColumn="nombreccz">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Dimension type="StandardDimension" visible="true" foreignKey="idlinea" name="lineas">
+      <Hierarchy name="lineas" visible="true" hasAll="true">
+        <Table name="lineas" schema="public" alias="">
+        </Table>
+        <Level name="idlinea" visible="true" table="lineas" column="idlinea" uniqueMembers="false" captionColumn="nomlinea">
+        </Level>
+      </Hierarchy>
+    </Dimension>
+    <Measure name="polucion" column="polucion" datatype="Numeric" aggregator="avg" caption="avgPolucion" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
